@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+import { Resolve } from '@angular/router';
+import { RecordService } from '../../services/record-service';
 
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class RecordsResolver implements Resolve<any> {
-  constructor() { }
+  constructor(private recordSrv: RecordService) { }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-
-    console.log('RecordsResolver called');
-    return [];
+  resolve() {
+    return this.recordSrv.getRecords();
   };
 }

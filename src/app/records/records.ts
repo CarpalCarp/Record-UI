@@ -1,16 +1,43 @@
 import { Component } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
+import { ActivatedRoute } from '@angular/router';
+import { RawRecord } from '../services/record-service';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+
+interface TableRecord extends RawRecord {
+  expanded: boolean
+}
 
 @Component({
   selector: 'app-records',
   imports: [
+    MatButtonModule,
+    CommonModule,
+    MatIconModule,
     MatTableModule
   ],
   templateUrl: './records.html',
-  styleUrl: './records.scss'
+  styleUrl: './records.scss',
+  animations: [
+    trigger('detailExpand', [
+
+    ])
+  ]
 })
 export class Records {
-  dataSource = [];
-  displayedColumns: string[] = ['id', 'first name', 'last name', 'age'];
+  dataSource: TableRecord[] = [];
+  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'age'];
 
+  constructor(private activatedRoute: ActivatedRoute) {
+    const rawData = this.activatedRoute.snapshot.data['records'];
+    this.dataSource = rawData.map((data: RawRecord) => {
+      return {
+        ...data,
+        expanded: false
+      }
+    });
+  }
 }
