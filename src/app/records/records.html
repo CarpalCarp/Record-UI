@@ -31,13 +31,14 @@
 		<!-- Expanded Detail Column -->
 		<ng-container matColumnDef="expandedDetail">
 			<td mat-cell [attr.colspan]="displayedColumns.length" *matCellDef="let element">
-				Expanded detail row for the element {{element.name}}
+				<div [@detailExpand]="element.expanded? 'expanded' : 'collapsed'">
+					Expanded detail row for the element {{element.name}}
+				</div>
 			</td>
 		</ng-container>
 
 		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 		<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-		<tr mat-row *matRowDef="let row; columns: ['expandedDetail'];"
-			[ngClass]="{'expanded-row': row.expanded, 'hidden-row': !row.expanded}"></tr>
+		<tr mat-row *matRowDef="let row; columns: ['expandedDetail'];" class="detail-row"></tr>
 	</table>
 </div>
