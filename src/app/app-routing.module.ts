@@ -1,6 +1,6 @@
 import { RouterModule, Routes } from '@angular/router';
-import { Records } from './records/records';
-import { RecordsResolver } from './records/resolvers/records-resolver';
+import { Records } from './records/records.component';
+import { RecordsResolver } from './records/resolvers/records.resolver';
 import { NgModule } from '@angular/core';
 
 export const routes: Routes = [

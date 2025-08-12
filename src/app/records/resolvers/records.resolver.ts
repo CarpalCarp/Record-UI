@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
-import { RecordService } from '../../services/record-service';
+import { RecordService } from '../../services/record.service';
 
 
 @Injectable({

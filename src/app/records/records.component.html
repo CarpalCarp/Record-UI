@@ -1,3 +1,12 @@
+<mat-form-field>
+	<mat-label>Group By</mat-label>
+	<mat-select [(ngModel)]="groupBy" name="grouping">
+		<mat-option value="noGrouping" (click)="restructureTable('noGrouping')">(No Grouping)</mat-option>
+		<mat-option value="firstName" (click)="restructureTable('firstName')">First Name</mat-option>
+		<mat-option value="lastName" (click)="restructureTable('lastName')">Last Name</mat-option>
+		<mat-option value="age" (click)="restructureTable('age')">Age</mat-option>
+	</mat-select>
+</mat-form-field>
 <div class="table-container">
 	<table mat-table [dataSource]="dataSource" multiTemplateDataRows>
 		<ng-container matColumnDef="id">
@@ -37,8 +46,16 @@
 			</td>
 		</ng-container>
 
+		<!-- Grouping Row -->
+		<ng-container matColumnDef="groupingRow">
+			<td mat-cell [attr.colspan]="displayedColumns.length" *matCellDef="let element">
+				{{element.value}} ({{element.count}})
+			</td>
+		</ng-container>
+
 		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-		<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+		<tr mat-row *matRowDef="let row; columns: displayedColumns; when: isRecordRow"></tr>
 		<tr mat-row *matRowDef="let row; columns: ['expandedDetail'];" class="detail-row"></tr>
+		<tr mat-row *matRowDef="let row; columns: ['groupingRow']; when: isGroupingRow"></tr>
 	</table>
 </div>
