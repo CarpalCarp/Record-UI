@@ -1,4 +1,4 @@
-import { Component, model, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RawRecord } from '../services/record.service';
 import { CommonModule } from '@angular/common';
