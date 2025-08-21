@@ -1,25 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, model, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RawRecord } from '../services/record.service';
-import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { AgGridAngular } from 'ag-grid-angular';
-import { ModuleRegistry, ColDef } from 'ag-grid-community';
+import { ModuleRegistry, ColDef, GridApi } from 'ag-grid-community';
 import { AllEnterpriseModule } from 'ag-grid-enterprise';
 import { AgChartsEnterpriseModule } from 'ag-charts-enterprise';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 ModuleRegistry.registerModules([AllEnterpriseModule.with(AgChartsEnterpriseModule)]);
 
-interface TableRow extends RawRecord {
-  expanded: boolean
-}
-
 type GroupingOptions = 'firstName' | 'lastName' | 'age' | 'noGrouping';
+
+interface GroupingSelection {
+  value: GroupingOptions
+  viewValue: string
+}
 
 @Component({
   selector: 'app-records',
   imports: [
-    MatButtonModule,
+    MatFormFieldModule,
+    MatSelectModule,
     CommonModule,
     AgGridAngular
   ],
@@ -27,22 +30,36 @@ type GroupingOptions = 'firstName' | 'lastName' | 'age' | 'noGrouping';
   styleUrl: './records.component.scss'
 })
 export class Records {
-  dataSource: TableRow[] = [];
+  dataSource: RawRecord[] = [];
   displayedColumns: ColDef[] = [
     { field: 'id', flex: 1, hide: true },
-    { field: 'firstName', flex: 1, rowGroup: true },
+    { field: 'firstName', flex: 1 },
     { field: 'lastName', flex: 1 },
     { field: 'age', flex: 1 }
   ];
-  groupBy: GroupingOptions = 'noGrouping';
+  groups: GroupingSelection[] = [
+    { value: 'firstName', viewValue: 'First Name' },
+    { value: 'lastName', viewValue: 'Last Name' },
+    { value: 'age', viewValue: 'Age' }
+  ];
+  groupSelection = signal('noGrouping' as GroupingOptions);
+
+  private gridApi!: GridApi<RawRecord>;
 
   constructor(private activatedRoute: ActivatedRoute) {
-    const rawData = this.activatedRoute.snapshot.data['records'];
-    this.dataSource = rawData.map((data: RawRecord) => {
-      return {
-        ...data,
-        expanded: false
+    this.dataSource = this.activatedRoute.snapshot.data['records'];
+  }
+
+  changeTable(group: GroupingOptions) {
+    const updatedColData = this.displayedColumns.map(col => {
+      if (col.field === group) {
+        return { ...col, rowGroup: true };
+      } else {
+        return { ...col, rowGroup: false };
       }
     });
+    this.groupSelection.set(group);
+    this.displayedColumns = updatedColData;
+    this.gridApi.setGridOption("rowData", this.dataSource);
   }
 }
