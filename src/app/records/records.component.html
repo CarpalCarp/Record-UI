@@ -1,10 +1,3 @@
-<mat-form-field>
-  <mat-label>Group By:</mat-label>
-  <mat-select [value]="groupSelection()">
-    <mat-option value="noGrouping" (click)="changeTable('noGrouping')">No Grouping</mat-option>
-    @for (group of groups; track group.value) {
-    <mat-option [value]="group.value" (click)="changeTable(group.value)">{{ group.viewValue }}</mat-option>
-    }
-  </mat-select>
-</mat-form-field>
-<ag-grid-angular [rowData]="dataSource" [columnDefs]="displayedColumns" style="height: 500px;" />
+<div class="table-container">
+  <ag-grid-angular [rowGroupPanelShow]="rowGroupPanelShow" [rowData]="dataSource" [columnDefs]="displayedColumns" />
+</div>

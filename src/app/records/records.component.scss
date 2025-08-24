@@ -1,0 +1,9 @@
+.table-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  ag-grid-angular {
+    height: 100%;
+  }
+}
