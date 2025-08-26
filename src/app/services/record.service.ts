@@ -2,17 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 
-interface RecordDetails {
-  email: string
-  phone: string
-  address: {
-    street: string
-    city: string
-    state: string
-    zip: number
-  }
-}
-
 export interface RawRecord {
   id: string
   firstName: string
@@ -20,7 +9,12 @@ export interface RawRecord {
   age: number
   description: string
   dateOfBirth: Date
-  details: RecordDetails
+  email: string
+  phone: string
+  street: string
+  city: string
+  state: string
+  zip: number
 }
 
 @Injectable({
