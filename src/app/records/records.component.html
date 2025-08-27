@@ -1,5 +1,5 @@
 <div class="table-container">
   <ag-grid-angular [rowGroupPanelShow]="rowGroupPanelShow" [rowData]="dataSource" [columnDefs]="displayedColumns"
-    [detailCellRenderer]="detailCellRenderer" [detailCellRendererParams]="detailCellRendererParams"
-    [masterDetail]="true" (firstDataRendered)="onFirstDataRendered($event)" />
+    [detailCellRenderer]="detailCellRenderer" [masterDetail]="true" (firstDataRendered)="onFirstDataRendered($event)"
+    [detailRowHeight]="detailRowHeight" />
 </div>

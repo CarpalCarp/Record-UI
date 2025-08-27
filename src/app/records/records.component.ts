@@ -31,7 +31,8 @@ export class Records {
 
   detailCellRenderer: any = DetailCellRenderer;
   // params sent to the Detail Cell Renderer, in this case your MyCellRendererComp
-  detailCellRendererParams = {};
+  // detailCellRendererParams = {};
+  detailRowHeight = 160;
 
   constructor(private activatedRoute: ActivatedRoute) {
     this.dataSource = this.activatedRoute.snapshot.data['records'];
