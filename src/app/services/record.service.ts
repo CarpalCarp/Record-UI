@@ -21,7 +21,7 @@ export interface RawRecord {
   providedIn: 'root'
 })
 export class RecordService {
-  baseUrl = '/app/records';
+  baseUrl = '/api/records';
 
   constructor(private http: HttpClient) { }
 
